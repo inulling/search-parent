@@ -53,8 +53,8 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
      * @return
      */
     public static byte[] serialize(Object object) {
-        ObjectOutputStream oos = null;
-        ByteArrayOutputStream baos = null;
+        ObjectOutputStream oos;
+        ByteArrayOutputStream baos;
         try {
             if (object != null) {
                 baos = new ByteArrayOutputStream();
@@ -75,7 +75,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
      * @return
      */
     public static Object unserialize(byte[] bytes) {
-        ByteArrayInputStream bais = null;
+        ByteArrayInputStream bais;
         try {
             if (bytes != null && bytes.length > 0) {
                 bais = new ByteArrayInputStream(bytes);

@@ -2,6 +2,7 @@ package net.vipmro.search.core.utils;
 
 import net.vipmro.search.core.exception.HttpException;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,18 +17,17 @@ import java.net.URL;
  * @author fengxiangyang
  * @date 2018/11/30
  */
-public class HttpClientUtils {
+public class HttpUtils {
+    private static final Logger logger = LoggerFactory.getLogger(HttpUtils.class);
     public static final String CHARSET = "utf-8";
-
     /**
      * post
      *
      * @param url
-     * @param logger
      * @return
      */
-    public static String post(String url, Logger logger) {
-        return request(url, "POST", CHARSET, logger);
+    public static String post(String url) {
+        return request(url, "POST", CHARSET);
     }
 
     /**
@@ -38,7 +38,7 @@ public class HttpClientUtils {
      * @return
      */
     public static String get(String url, Logger logger) {
-        return request(url, "GET", CHARSET, logger);
+        return request(url, "GET", CHARSET);
     }
 
     /**
@@ -46,11 +46,10 @@ public class HttpClientUtils {
      *
      * @param url
      * @param method
-     * @param logger
      * @return
      */
-    public static String request(String url, String method, Logger logger) {
-        return request(url, method, CHARSET, logger);
+    public static String request(String url, String method) {
+        return request(url, method, CHARSET);
     }
 
     /**
@@ -59,10 +58,9 @@ public class HttpClientUtils {
      * @param url
      * @param method
      * @param charset
-     * @param logger
      * @return
      */
-    public static String request(String url, String method, String charset, Logger logger) {
+    public static String request(String url, String method, String charset) {
         HttpURLConnection httpConnection = null;
         InputStream dataIn = null;
         try {

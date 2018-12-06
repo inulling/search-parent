@@ -1,15 +1,11 @@
 package net.vipmro.search.redis;
 
+import net.vipmro.search.core.utils.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,62 +25,6 @@ public class JedisHandler {
 
     private Jedis getJedis() {
         return jedisConfig.redisPoolFactory().getResource();
-    }
-
-    /**
-     * 序列化Key
-     *
-     * @param key
-     * @return
-     */
-    private byte[] serializeKey(String key) {
-        return key.getBytes();
-    }
-
-    /**
-     * 序列化Value
-     *
-     * @param object
-     * @return
-     */
-    private byte[] serializeValue(Object object) {
-        if (object == null) {
-            return null;
-        }
-        ObjectOutputStream objectOutputStream;
-        ByteArrayOutputStream byteArrayOutputStream;
-        try {
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(object);
-            byte[] bytes = byteArrayOutputStream.toByteArray();
-            return bytes;
-        } catch (Exception e) {
-            throw new JedisException("实例化失败：" + object.getClass().getName() + "未实现java.io.Serializable或全局变量未实现", e);
-        }
-    }
-
-    /**
-     * 反序列化Value
-     *
-     * @param bytes
-     * @return
-     */
-    private Object deserializeValue(byte[] bytes) {
-        if (bytes != null) {
-            if (Arrays.equals(NULL, bytes)) {
-                return null;
-            }
-            ByteArrayInputStream byteArrayOutputStream;
-            try {
-                byteArrayOutputStream = new ByteArrayInputStream(bytes);
-                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayOutputStream);
-                return objectInputStream.readObject();
-            } catch (Exception e) {
-                throw new JedisException("实例化失败", e);
-            }
-        }
-        return null;
     }
 
     /**
@@ -109,10 +49,10 @@ public class JedisHandler {
      * @return
      */
     public <T> T cache(String key, CacheData data, int expireTime) {
-        Object result = deserializeValue(get(serializeKey(key)));
+        Object result = ObjectUtils.unserialize(get(key.getBytes()));
         if (result == null) {
             result = data.findData();
-            this.setex(serializeKey(key), serializeValue(result), expireTime);
+            this.setex(key.getBytes(), ObjectUtils.serialize(result), expireTime);
         }
         return (T) result;
     }

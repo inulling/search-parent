@@ -19,6 +19,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>net.vipmro.search</groupId>
+            <artifactId>search-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
@@ -45,6 +51,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
 
 </project>

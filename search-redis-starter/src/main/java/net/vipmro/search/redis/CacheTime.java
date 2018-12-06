@@ -27,6 +27,4 @@ public interface CacheTime {
     int MONTH_1 = DAY_1 * 30;
     int MONTH_2 = MONTH_1 * 2;
     int MONTH_3 = MONTH_1 * 3;
-
-    String key();
 }

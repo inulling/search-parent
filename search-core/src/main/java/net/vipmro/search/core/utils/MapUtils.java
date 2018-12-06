@@ -13,7 +13,6 @@ public class MapUtils {
 
     /**
      * 转换为map
-     *
      * @param objects
      * @return
      */
@@ -32,4 +31,5 @@ public class MapUtils {
         }
         return (Map<K, V>) map;
     }
+
 }
