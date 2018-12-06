@@ -16,6 +16,18 @@ public class Result<T> implements Serializable {
     private String msg;
     private T data;
 
+    public Result() {
+    }
+
+    public Result(Integer code) {
+        this.code = code;
+    }
+
+    public Result(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public Integer getCode() {
         return code;
     }

@@ -28,6 +28,14 @@ public class PageInfo<T> implements Serializable {
      */
     private List<T> dataList;
 
+    public PageInfo() {
+    }
+
+    public PageInfo(Integer pageNo, Integer pageSize) {
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
+
     public Integer getPageNo() {
         return pageNo;
     }
