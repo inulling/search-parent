@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author fengxiangyang
  * @date 2018/6/12
  */
-public class EsClientSpringFactory {
+public class ElasticsearchClientFactory {
     public static int CONNECT_TIMEOUT_MILLIS = 1000;
     public static int SOCKET_TIMEOUT_MILLIS = 30000;
     public static int CONNECTION_REQUEST_TIMEOUT_MILLIS = 500;
@@ -25,21 +25,21 @@ public class EsClientSpringFactory {
     private RestClient restClient;
     private RestHighLevelClient restHighLevelClient;
 
-    private static EsClientSpringFactory esClientSpringFactory = new EsClientSpringFactory();
+    private static ElasticsearchClientFactory esClientSpringFactory = new ElasticsearchClientFactory();
 
-    private EsClientSpringFactory() {
+    private ElasticsearchClientFactory() {
     }
 
-    public static EsClientSpringFactory build(HttpHost[] httpHost,
-                                              Integer maxConnectNum, Integer maxConnectPerRoute) {
+    public static ElasticsearchClientFactory build(HttpHost[] httpHost,
+                                                   Integer maxConnectNum, Integer maxConnectPerRoute) {
         HTTP_HOST = httpHost;
         MAX_CONN_TOTAL = maxConnectNum;
         MAX_CONN_PER_ROUTE = maxConnectPerRoute;
         return esClientSpringFactory;
     }
 
-    public static EsClientSpringFactory build(HttpHost[] httpHost, Integer connectTimeOut, Integer socketTimeOut,
-                                              Integer connectionRequestTime, Integer maxConnectNum, Integer maxConnectPerRoute) {
+    public static ElasticsearchClientFactory build(HttpHost[] httpHost, Integer connectTimeOut, Integer socketTimeOut,
+                                                   Integer connectionRequestTime, Integer maxConnectNum, Integer maxConnectPerRoute) {
         HTTP_HOST = httpHost;
         CONNECT_TIMEOUT_MILLIS = connectTimeOut;
         SOCKET_TIMEOUT_MILLIS = socketTimeOut;

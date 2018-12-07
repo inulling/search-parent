@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
 		<java_source_version>1.8</java_source_version>
 		<java_target_version>1.8</java_target_version>
-		<spring_version>5.0.7.RELEASE</spring_version>
+		<spring_version>5.0.0.RELEASE</spring_version>
 		<junit_version>4.11</junit_version>
 	</properties>
 

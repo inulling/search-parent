@@ -17,8 +17,8 @@ import java.io.IOException;
  * @author fengxiangyang
  * @date 2018/6/14
  */
-public class EsHandler {
-    private final static Logger logger = LogManager.getLogger(EsHandler.class);
+public class ElasticsearchHandler {
+    private final static Logger logger = LogManager.getLogger(ElasticsearchHandler.class);
 
     @Autowired
     private RestHighLevelClient restHighLevelClient;

@@ -1,7 +1,7 @@
 package net.vipmro.search.elasticsearch;
 
 /**
- * 缓存异常
+ * ES异常
  *
  * @author fengxiangyang
  * @date 2018/12/3
