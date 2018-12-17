@@ -16,9 +16,6 @@ import java.util.Set;
  */
 public class JedisHandler {
     private static final Logger logger = LoggerFactory.getLogger(JedisHandler.class);
-    String Y = "Y";
-    byte[] NULL = "(nil)".getBytes();
-    byte[] YES = Y.getBytes();
 
     @Autowired
     private JedisConfig jedisConfig;
@@ -49,10 +46,10 @@ public class JedisHandler {
      * @return
      */
     public <T> T cache(String key, CacheData data, int expireTime) {
-        Object result = ObjectUtils.unserialize(get(key.getBytes()));
+        Object result = get(key);
         if (result == null) {
             result = data.findData();
-            this.setex(key.getBytes(), ObjectUtils.serialize(result), expireTime);
+            this.setex(key, result, expireTime);
         }
         return (T) result;
     }
@@ -64,10 +61,10 @@ public class JedisHandler {
      * @param value
      * @return
      */
-    public String set(String key, String value) {
+    public String set(String key, Object value) {
         String back;
         try (Jedis jedis = getJedis()) {
-            back = jedis.set(key, value);
+            back = jedis.set(key.getBytes(), ObjectUtils.serialize(value));
         } catch (Exception e) {
             logger.info("jedis执行失败：ex={}, key={}, value={}", e.getMessage(), key, value);
             throw new JedisException(e);
@@ -83,28 +80,10 @@ public class JedisHandler {
      * @param seconds
      * @return
      */
-    public String setex(byte[] key, byte[] value, int seconds) {
+    public String setex(String key, Object value, int seconds) {
         String back;
         try (Jedis jedis = getJedis()) {
-            back = jedis.setex(key, seconds, value);
-        } catch (Exception e) {
-            logger.info("jedis执行失败：ex={}, key={}, value={}, seconds={}", e.getMessage(), key, value, seconds);
-            throw new JedisException(e);
-        }
-        return back;
-    }
-    /**
-     * 将值 value 关联到 key , 并将 key 的生存时间设为 seconds (以秒为单位)。
-     *
-     * @param key
-     * @param value
-     * @param seconds
-     * @return
-     */
-    public String setex(String key, String value, int seconds) {
-        String back;
-        try (Jedis jedis = getJedis()) {
-            back = jedis.setex(key, seconds, value);
+            back = jedis.setex(key.getBytes(), seconds, ObjectUtils.serialize(value));
         } catch (Exception e) {
             logger.info("jedis执行失败：ex={}, key={}, value={}, seconds={}", e.getMessage(), key, value, seconds);
             throw new JedisException(e);
@@ -155,27 +134,11 @@ public class JedisHandler {
      * @param key
      * @return
      */
-    public byte[] get(byte[] key) {
-        byte[] back;
+    public Object get(String key) {
+        Object back;
         try (Jedis jedis = getJedis()) {
-            back = jedis.get(key);
-        } catch (Exception e) {
-            logger.info("jedis执行失败：ex={}, key={}", e.getMessage(), key);
-            throw new JedisException(e);
-        }
-        return back;
-    }
-
-    /**
-     * 获取string类型
-     *
-     * @param key
-     * @return
-     */
-    public String get(String key) {
-        String back;
-        try (Jedis jedis = getJedis()) {
-            back = jedis.get(key);
+            final byte[] bytes = jedis.get(key.getBytes());
+            back = ObjectUtils.unserialize(bytes);
         } catch (Exception e) {
             logger.info("jedis执行失败：ex={}, key={}", e.getMessage(), key);
             throw new JedisException(e);
@@ -566,7 +529,6 @@ public class JedisHandler {
      * @param end
      * @return
      */
-    
     public Set<String> zrevrange(String key, long start, long end) {
         Set<String> back;
         try (Jedis jedis = getJedis()) {
@@ -598,4 +560,3 @@ public class JedisHandler {
     }
 
 }
-

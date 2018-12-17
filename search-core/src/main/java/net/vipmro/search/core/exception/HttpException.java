@@ -1,6 +1,7 @@
 package net.vipmro.search.core.exception;
 
-import static net.vipmro.search.core.model.ResultConstant.CODE_EXCEPTION;
+
+import static net.vipmro.search.core.constants.ResultConstant.CODE_EXCEPTION;
 
 /**
  * Http自定义异常

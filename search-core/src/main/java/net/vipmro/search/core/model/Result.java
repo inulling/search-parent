@@ -2,7 +2,8 @@ package net.vipmro.search.core.model;
 
 import java.io.Serializable;
 
-import static net.vipmro.search.core.model.ResultConstant.CODE_SUCCESS;
+import static net.vipmro.search.core.constants.ResultConstant.CODE_SUCCESS;
+
 
 /**
  * 返回结果
