@@ -66,7 +66,7 @@ public class JedisHandler {
         try (Jedis jedis = getJedis()) {
             back = jedis.set(key.getBytes(), ObjectUtils.serialize(value));
         } catch (Exception e) {
-            logger.info("jedis执行失败：ex={}, key={}, value={}", e.getMessage(), key, value);
+            logger.error("jedis执行失败：ex={}, key={}, value={}", e.getMessage(), key, value);
             throw new JedisException(e);
         }
         return back;

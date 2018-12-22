@@ -1,13 +1,13 @@
 package net.vipmro.search.elasticsearch;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.io.IOException;
  * @date 2018/6/14
  */
 public class ElasticsearchHandler {
-    private final static Logger logger = LogManager.getLogger(ElasticsearchHandler.class);
+    private final static Logger logger = LoggerFactory.getLogger(ElasticsearchHandler.class);
 
     @Autowired
     private RestHighLevelClient restHighLevelClient;
