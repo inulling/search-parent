@@ -4,6 +4,8 @@ import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
@@ -79,6 +81,19 @@ public class ElasticsearchHandler {
             }
         } catch (IOException e) {
             logger.error("批量执行异常：ex={}", e.getMessage());
+            throw new ElasticsearchException(e);
+        }
+    }
+
+    /**
+     * 查询
+     * @param searchRequest
+     */
+    public SearchResponse search(SearchRequest searchRequest) {
+        try {
+            return restHighLevelClient.search(searchRequest);
+        } catch (IOException e) {
+            logger.error("查询异常：ex={}", e.getMessage());
             throw new ElasticsearchException(e);
         }
     }
